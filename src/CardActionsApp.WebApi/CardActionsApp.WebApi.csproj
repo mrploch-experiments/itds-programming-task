@@ -8,7 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentResults" />
+        <PackageReference Include="FluentResults.Extensions.AspNetCore" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Polly" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
     </ItemGroup>
 
@@ -16,6 +19,10 @@
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CardActionsApp.Business\CardActionsApp.Business.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,8 @@
-﻿using CardActionsApp.WebApi.Model;
+﻿using CardActionsApp.Business;
+using CardActionsApp.WebApi.Model;
 using CardActionsApp.WebApi.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CardActionsApp.WebApi.Endpoints;
 
@@ -8,21 +10,38 @@ public static class CardActionsEndpointsV1
 {
     public static RouteGroupBuilder MapCardActionsApiV1(this RouteGroupBuilder group)
     {
-        group.WithOpenApi().WithTags("CardActions").MapGet("/", GetCardActions);
+        var groupBuilder = group.WithOpenApi().WithTags("CardActions");
+        groupBuilder.MapGet("/", GetCardActions);
+        groupBuilder.MapGet("/carddetails", GetAllCardDetails);
 
         return group;
     }
-    
-    public static async Task<Results<NotFound, BadRequest, Ok<CardActions>>> GetCardActions(string userId, string cardNumber, ICardService cardService, ICardActionsService cardActionsService)
+
+    public static async Task<Results<NotFound, ProblemHttpResult, Ok<CardActions>>> GetCardActions(string userId, string cardNumber, GetAllowedCardActions getAllowedCardActions, ILoggerFactory loggerFactory)
     {
-        var cardDetails = await cardService.GetCardDetails(userId, cardNumber);
-        if (cardDetails is null)
+        var logger = loggerFactory.CreateLogger("CardActionsEndpointsV1");
+        try
         {
+            logger.LogDebug("Getting card actions for user {UserId} card {CardNumber}", userId, cardNumber);
+            var result = await getAllowedCardActions.Execute(userId, cardNumber);
+            
+            return TypedResults.Ok(result);
+        }
+        catch (CardDetailsNotFoundException ex)
+        {
+            logger.LogError(ex, "Card details not found for user {UserId} card {CardNumber}", userId, cardNumber);
             return TypedResults.NotFound();
         }
-
-        var allowedActions = await cardActionsService.GetAllowedActions(cardDetails);
-        
-        return TypedResults.Ok(new CardActions(userId, cardNumber, allowedActions));
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error while getting card actions for user {UserId} card {CardNumber}", userId, cardNumber);
+            return TypedResults.Problem(ex.Message, statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+    
+    public static async Task<Ok<Dictionary<string, Dictionary<string, CardDetails>>>> GetAllCardDetails(ICardService cardService)
+    {
+        var result = await cardService.GetAllCardDetails();
+        return TypedResults.Ok(result);
     }
 }

@@ -1,22 +1,22 @@
 <Project>
 
-  <PropertyGroup Label="Build">
-    <LangVersion>latest</LangVersion>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <TargetFramework>net8.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup Label="Build">
+        <LangVersion>latest</LangVersion>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
 
-  <PropertyGroup Label="Versioning">
-    <MinVerDefaultPreReleaseIdentifiers>preview.0</MinVerDefaultPreReleaseIdentifiers>
-    <MinVerVerbosity>normal</MinVerVerbosity>
-    <MinVerMinimumMajorMinor>1.0</MinVerMinimumMajorMinor>
-  </PropertyGroup>
+    <PropertyGroup Label="Versioning">
+        <MinVerDefaultPreReleaseIdentifiers>preview.0</MinVerDefaultPreReleaseIdentifiers>
+        <MinVerVerbosity>normal</MinVerVerbosity>
+        <MinVerMinimumMajorMinor>1.0</MinVerMinimumMajorMinor>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <SolutionRootNamespace>Itds.CardActionsApp</SolutionRootNamespace>
-  </PropertyGroup>
+    <PropertyGroup>
+        <SolutionRootNamespace>Itds.CardActionsApp</SolutionRootNamespace>
+    </PropertyGroup>
 
 </Project>

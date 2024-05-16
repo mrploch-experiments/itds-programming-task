@@ -14,15 +14,15 @@ public class CardActionsEndpointsV1Tests : IClassFixture<TestWebApplicationFacto
     public CardActionsEndpointsV1Tests(TestWebApplicationFactory<Program> factory)
     {
         _factory = factory;
-        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_1", CancellationToken.None))
+        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_1", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new CardDetails("Card_1", CardType.Prepaid, CardStatus.Active, true));
-        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_2", CancellationToken.None))
+        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_2", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new CardDetails("Card_2", CardType.Debit, CardStatus.Ordered, true));
-        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_3", CancellationToken.None))
+        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_3", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new CardDetails("Card_3", CardType.Credit, CardStatus.Inactive, true));
-        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_4", CancellationToken.None))
+        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserA", "Card_4", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new CardDetails("Card_4", CardType.Credit, CardStatus.Ordered, true));
-        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserB", "Card_5", CancellationToken.None))
+        _factory.CardServiceMock.Setup(s => s.GetCardDetailsAsync("UserB", "Card_5", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new CardDetails("Card_5", CardType.Credit, CardStatus.Ordered, false));
         _httpClient = factory.CreateClient();
     }
